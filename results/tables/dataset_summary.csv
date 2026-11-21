@@ -1,0 +1,8 @@
+quantity,count
+all_metadata_rows,1265657
+earthquake_local_rows,1030231
+noise_rows,235426
+RQ1_valid_trace_rows,1030182
+RQ1_unique_source_ids,441686
+RQ2_valid_ml_trace_rows,724790
+RQ2_unique_events,259817

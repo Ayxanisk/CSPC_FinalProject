@@ -17,20 +17,37 @@ earthquake/noise classification. The proposed questions and analysis plan are in
 The archive has 1,265,657 metadata rows: 1,030,231 local-earthquake traces and
 235,426 noise traces. The noise rows do not have earthquake magnitude, distance,
 arrival-pick, or SNR values. Among earthquake rows, 724,824 use the local
-magnitude scale (`ml`). These counts were obtained by streaming the supplied CSV
-archive and should be reproduced by the project pipeline before they are used in
-the final paper.
+magnitude scale (`ml`). The analysis applies additional complete-case filters;
+its final sample counts are written to `results/tables/dataset_summary.csv`.
 
-## Reproducibility plan
+## Reproducing the analysis
 
-The final repository should include a pinned environment, a Snakemake pipeline
-from the raw metadata archive to every analysis table and figure, pytest tests,
-and documentation for reproducing the results. The team should implement and
-review the analysis code and write the paper in its own words, following the
-course handout and the LaTeX template supplied on Moodle.
+The requested scientific packages and Snakemake are pinned in
+[`requirements.txt`](requirements.txt). From the repository root, install them
+in a Python 3.11 environment with `python -m venv .venv` and
+`.venv/bin/python -m pip install -r requirements.txt`, then run
+`.venv/bin/snakemake --cores 1`. The workspace points Pylance at this `.venv`.
+The workflow writes tables to `results/tables/` and figures to
+`results/figures/`.
+If the user's cache directory is read-only, set `XDG_CACHE_HOME` to a writable
+location before running Snakemake (for example, `XDG_CACHE_HOME=/tmp/snakemake-cache`).
+
+## Current analysis snapshot
+
+- RQ1: the depth-aware model achieved held-out MAE 4.871 km, RMSE 9.663 km, and
+  R² 0.9606. The linear timing-only model achieved 5.823 km, 11.281 km, and
+  0.9464 respectively.
+- RQ2: after event-level aggregation and adjustment for distance and depth, the
+  fitted ML coefficient was +8.659 dB per magnitude unit (95% CI 8.613 to
+  8.705; model-based p < 0.001). The event-level model R² was 0.349.
+
+The analysis was rerun with the requested NumPy, SciPy, pandas, and Matplotlib
+pins. Actual versions are recorded in `results/tables/software_versions.csv`.
 
 ## Source
 
+The project page supplied by the team is
+[Stanford Earthquake Dataset (STEAD) on Kaggle](https://www.kaggle.com/datasets/isevilla/stanford-earthquake-dataset-stead?resource=download).
 The STEAD dataset and its data-access notes are maintained by the original
 authors at [smousavi05/STEAD](https://github.com/smousavi05/STEAD). The dataset
 paper is Mousavi et al. (2019), “STanford EArthquake Dataset (STEAD): A Global
@@ -39,7 +56,7 @@ Data Set of Seismic Signals for AI,” *IEEE Access*,
 
 ## Status
 
-This is a planning scaffold. The research questions need team agreement, and
-analysis scripts, figures, tests, and the paper still need to be authored and
-reviewed by the team.
+The research questions, analysis code, initial results, figures, and paper
+draft are in place. The public GitHub URL, team author/contribution details,
+pytest tests, and any further revisions remain to be completed.
 # CSPC_FinalProject
